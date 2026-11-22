@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import cv2
@@ -12,14 +13,17 @@ from src.mouth import crop_mouth
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 MLFLOW_DB = PROJECT_DIR / "mlflow.db"
-MODEL_URI = "models:/lipreading-grid@champion"
+MODEL_URI = os.environ.get("MODEL_URI", "models:/lipreading-grid@champion")
 NUM_FRAMES = 75
 
 
 def load_model(device):
-    mlflow.set_tracking_uri("sqlite:///" + MLFLOW_DB.as_posix())
+    if MODEL_URI.startswith("models:/"):
+        mlflow.set_tracking_uri("sqlite:///" + MLFLOW_DB.as_posix())
+
     model = mlflow.pytorch.load_model(MODEL_URI, map_location=device)
     model.eval()
+    model.gru.flatten_parameters()
     return model
 
 

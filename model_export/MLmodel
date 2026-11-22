@@ -1,0 +1,36 @@
+artifact_path: file:///c:/Users/vova1/Documents/vscodefiles/resume projects/Speech
+  recognition/notebooks/mlruns/1/models/m-5cb6788f09a54da4b1fd44af9890135b/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.11.17
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.6.0+cu124
+is_signature_from_type_hint: false
+mlflow_version: 3.16.1
+model_id: m-5cb6788f09a54da4b1fd44af9890135b
+model_size_bytes: 42770709
+model_uuid: m-5cb6788f09a54da4b1fd44af9890135b
+prompts: null
+run_id: 8cf09bf75ce646c7b8aeff923b023b52
+saved_input_example_info:
+  artifact_path: input_example.json
+  serving_input_path: serving_input_example.json
+  type: ndarray
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1, 1,
+    75, 40, 80]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    75, 28]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-10-28 04:06:39.808740'
