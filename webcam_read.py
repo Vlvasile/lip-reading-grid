@@ -21,6 +21,24 @@ checkpoint = torch.load(CHECKPOINT_PATH, map_location=device)
 model.load_state_dict(checkpoint["model"])
 model.eval()
 
+def blur_background(frame, landmarks):
+    height = frame.shape[0]
+    width = frame.shape[1]
+
+    xs = []
+    ys = []
+    for point in landmarks:
+        xs.append(int(point.x * width))
+        ys.append(int(point.y * height))
+
+    left = max(min(xs) - 40, 0)
+    right = min(max(xs) + 40, width)
+    top = max(min(ys) - 60, 0)
+    bottom = min(max(ys) + 40, height)
+
+    blurred = cv2.GaussianBlur(frame, (55, 55), 0)
+    blurred[top:bottom, left:right] = frame[top:bottom, left:right]
+    return blurred
 
 def resample_frames(frames, count):
     positions = np.linspace(0, len(frames) - 1, count)
@@ -62,6 +80,7 @@ while True:
 
     if results.multi_face_landmarks is not None:
         landmarks = results.multi_face_landmarks[0].landmark
+        frame = blur_background(frame, landmarks)
 
         height = frame.shape[0]
         width = frame.shape[1]
